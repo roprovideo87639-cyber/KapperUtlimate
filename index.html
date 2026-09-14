@@ -1,0 +1,3197 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kapper Online Web Bouwers | Ultimate Edition</title>
+<meta name="description"
+content="Kapper Online Web Bouwers — premium websites voor kappers, barbers en salons.">
+<meta name="theme-color" content="#090909">
+<!-- =========================================================
+     GOOGLE FONTS
+========================================================= -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&display=swap" rel="stylesheet">
+<!-- =========================================================
+     ICONS
+========================================================= -->
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<style>
+/* =========================================================
+   01. ROOT
+========================================================= */
+:root{
+--black:#070707;
+--black-2:#0c0c0c;
+--black-3:#111111;
+--card:#151515;
+--card-2:#191919;
+--white:#ffffff;
+--white-soft:#eeeeee;
+--gray:#8f8f8f;
+--gray-2:#bdbdbd;
+--gold:#c9a46c;
+--gold-light:#e4c996;
+--gold-dark:#927448;
+--green:#69c18b;
+--border:rgba(255,255,255,.09);
+--radius:20px;
+--ease:cubic-bezier(.2,.8,.2,1);
+--shadow:
+0 30px 90px rgba(0,0,0,.45);
+}
+/* =========================================================
+   02. RESET
+========================================================= */
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+html{
+scroll-behavior:smooth;
+}
+body{
+font-family:"DM Sans",sans-serif;
+background:var(--black);
+color:var(--white);
+line-height:1.7;
+overflow-x:hidden;
+}
+body::selection{
+background:var(--gold);
+color:#000;
+}
+img{
+display:block;
+width:100%;
+}
+a{
+text-decoration:none;
+color:inherit;
+}
+button,
+input,
+textarea,
+select{
+font-family:inherit;
+}
+button{
+cursor:pointer;
+}
+.container{
+width:min(1200px,90%);
+margin:auto;
+}
+/* =========================================================
+   03. CUSTOM CURSOR GLOW
+========================================================= */
+.cursor-glow{
+position:fixed;
+width:450px;
+height:450px;
+border-radius:50%;
+background:
+radial-gradient(
+circle,
+rgba(201,164,108,.07),
+transparent 65%
+);
+pointer-events:none;
+transform:translate(-50%,-50%);
+z-index:-1;
+transition:
+left .15s ease,
+top .15s ease;
+}
+/* =========================================================
+   04. NOISE
+========================================================= */
+.noise{
+position:fixed;
+inset:0;
+pointer-events:none;
+z-index:9999;
+opacity:.025;
+background-image:
+url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.8'/%3E%3C/svg%3E");
+}
+/* =========================================================
+   05. SCROLL PROGRESS
+========================================================= */
+.scroll-progress{
+position:fixed;
+top:0;
+left:0;
+height:3px;
+width:0%;
+background:
+linear-gradient(
+90deg,
+var(--gold-dark),
+var(--gold-light)
+);
+z-index:10001;
+}
+/* =========================================================
+   06. HEADER
+========================================================= */
+header{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+z-index:1000;
+padding:25px 0;
+transition:.45s var(--ease);
+}
+header.scrolled{
+padding:13px 0;
+background:
+rgba(7,7,7,.78);
+backdrop-filter:
+blur(25px);
+border-bottom:
+1px solid var(--border);
+}
+nav{
+display:flex;
+align-items:center;
+justify-content:space-between;
+gap:30px;
+}
+/* BRAND */
+.brand{
+display:flex;
+align-items:center;
+gap:12px;
+}
+.brand-logo{
+width:43px;
+height:43px;
+display:grid;
+place-items:center;
+border-radius:50%;
+border:
+1px solid rgba(201,164,108,.5);
+color:var(--gold-light);
+font-family:
+"Playfair Display",serif;
+font-size:17px;
+}
+.brand-name{
+font-size:14px;
+font-weight:700;
+letter-spacing:-.3px;
+}
+.brand-sub{
+display:block;
+font-size:8px;
+text-transform:uppercase;
+letter-spacing:2.5px;
+color:var(--gray);
+margin-top:2px;
+}
+/* NAVIGATION */
+.nav-links{
+display:flex;
+align-items:center;
+gap:27px;
+list-style:none;
+}
+.nav-links a{
+font-size:12px;
+color:#d4d4d4;
+transition:.3s;
+}
+.nav-links a:hover{
+color:var(--gold-light);
+}
+/* NAV CTA */
+.nav-cta{
+padding:11px 18px;
+border-radius:100px;
+background:
+rgba(201,164,108,.1);
+border:
+1px solid rgba(201,164,108,.35);
+color:var(--gold-light)!important;
+transition:.3s;
+}
+.nav-cta:hover{
+background:var(--gold);
+color:#000!important;
+transform:translateY(-2px);
+}
+/* MOBILE */
+.menu-toggle{
+display:none;
+background:none;
+border:0;
+color:white;
+font-size:22px;
+}
+/* =========================================================
+   07. HERO
+========================================================= */
+.hero{
+min-height:100vh;
+position:relative;
+display:flex;
+align-items:center;
+overflow:hidden;
+background:
+linear-gradient(
+90deg,
+rgba(0,0,0,.94) 0%,
+rgba(0,0,0,.75) 42%,
+rgba(0,0,0,.25) 100%
+),
+url("https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=2400&q=90")
+center/cover;
+}
+/* animated circles */
+.hero-orbit{
+position:absolute;
+width:650px;
+height:650px;
+border:
+1px solid rgba(201,164,108,.12);
+border-radius:50%;
+right:-250px;
+top:15%;
+animation:
+orbit 18s linear infinite;
+}
+.hero-orbit::before{
+content:"";
+position:absolute;
+width:10px;
+height:10px;
+border-radius:50%;
+background:var(--gold);
+top:50px;
+left:100px;
+box-shadow:
+0 0 35px var(--gold);
+}
+@keyframes orbit{
+to{
+transform:rotate(360deg);
+}
+}
+.hero-content{
+position:relative;
+z-index:2;
+max-width:900px;
+padding-top:100px;
+}
+.hero-label{
+display:flex;
+align-items:center;
+gap:12px;
+font-size:10px;
+text-transform:uppercase;
+letter-spacing:3px;
+color:var(--gold-light);
+margin-bottom:25px;
+}
+.hero-label::before{
+content:"";
+width:35px;
+height:1px;
+background:var(--gold);
+}
+.hero h1{
+font-family:
+"Playfair Display",serif;
+font-size:
+clamp(55px,8vw,105px);
+line-height:.96;
+letter-spacing:-4px;
+font-weight:600;
+margin-bottom:28px;
+}
+.hero h1 span{
+color:var(--gold-light);
+font-style:italic;
+}
+.hero-description{
+max-width:620px;
+font-size:15px;
+color:#c8c8c8;
+line-height:1.9;
+margin-bottom:35px;
+}
+.hero-buttons{
+display:flex;
+flex-wrap:wrap;
+gap:12px;
+}
+.btn{
+display:inline-flex;
+align-items:center;
+justify-content:center;
+gap:10px;
+padding:15px 23px;
+border-radius:100px;
+font-size:12px;
+font-weight:600;
+transition:.35s var(--ease);
+}
+.btn-primary{
+background:var(--gold);
+color:#080706;
+box-shadow:
+0 15px 40px rgba(201,164,108,.16);
+}
+.btn-primary:hover{
+background:var(--gold-light);
+transform:translateY(-4px);
+box-shadow:
+0 20px 50px rgba(201,164,108,.24);
+}
+.btn-outline{
+border:
+1px solid rgba(255,255,255,.2);
+background:
+rgba(255,255,255,.03);
+backdrop-filter:blur(10px);
+}
+.btn-outline:hover{
+border-color:var(--gold);
+color:var(--gold-light);
+transform:translateY(-4px);
+}
+/* HERO STATS */
+.hero-stats{
+display:flex;
+gap:55px;
+margin-top:60px;
+padding-top:25px;
+border-top:
+1px solid rgba(255,255,255,.12);
+}
+.hero-stat strong{
+display:block;
+font-family:
+"Playfair Display",serif;
+font-size:27px;
+}
+.hero-stat span{
+display:block;
+font-size:9px;
+color:var(--gray);
+text-transform:uppercase;
+letter-spacing:1.5px;
+}
+/* =========================================================
+   08. MARQUEE
+========================================================= */
+.marquee{
+overflow:hidden;
+background:#0d0d0d;
+border-top:
+1px solid var(--border);
+border-bottom:
+1px solid var(--border);
+padding:16px 0;
+}
+.marquee-track{
+display:flex;
+width:max-content;
+animation:
+marquee 25s linear infinite;
+}
+.marquee-item{
+display:flex;
+align-items:center;
+gap:25px;
+margin-right:25px;
+font-size:9px;
+text-transform:uppercase;
+letter-spacing:3px;
+color:#777;
+white-space:nowrap;
+}
+.marquee-item i{
+font-size:7px;
+color:var(--gold);
+}
+@keyframes marquee{
+to{
+transform:translateX(-50%);
+}
+}
+/* =========================================================
+   09. GENERAL SECTIONS
+========================================================= */
+section{
+padding:120px 0;
+}
+.section-header{
+display:flex;
+justify-content:space-between;
+align-items:end;
+gap:30px;
+margin-bottom:60px;
+}
+.section-label{
+color:var(--gold);
+font-size:9px;
+text-transform:uppercase;
+letter-spacing:3px;
+margin-bottom:12px;
+}
+.section-title{
+font-family:
+"Playfair Display",serif;
+font-size:
+clamp(40px,5vw,65px);
+line-height:1.05;
+letter-spacing:-2px;
+}
+.section-description{
+max-width:410px;
+font-size:13px;
+color:var(--gray);
+line-height:1.9;
+}
+/* =========================================================
+   10. ABOUT
+========================================================= */
+.about{
+background:
+linear-gradient(
+180deg,
+var(--black-2),
+var(--black)
+);
+}
+.about-grid{
+display:grid;
+grid-template-columns:
+1fr 1fr;
+gap:90px;
+align-items:center;
+}
+.about-image{
+position:relative;
+}
+.about-image img{
+height:620px;
+object-fit:cover;
+border-radius:var(--radius);
+}
+.about-image::before{
+content:"";
+position:absolute;
+width:100px;
+height:100px;
+border-top:
+1px solid var(--gold);
+border-left:
+1px solid var(--gold);
+left:-18px;
+top:-18px;
+}
+.about-image::after{
+content:"";
+position:absolute;
+width:100px;
+height:100px;
+border-right:
+1px solid var(--gold);
+border-bottom:
+1px solid var(--gold);
+right:-18px;
+bottom:-18px;
+}
+.about-badge{
+position:absolute;
+right:-30px;
+bottom:35px;
+padding:23px 27px;
+background:
+rgba(15,15,15,.88);
+backdrop-filter:blur(20px);
+border:
+1px solid var(--border);
+border-radius:15px;
+box-shadow:var(--shadow);
+}
+.about-badge strong{
+display:block;
+font-family:
+"Playfair Display",serif;
+font-size:27px;
+color:var(--gold-light);
+}
+.about-badge span{
+font-size:9px;
+color:var(--gray);
+text-transform:uppercase;
+letter-spacing:1.5px;
+}
+.about-copy p{
+font-size:14px;
+color:#bdbdbd;
+line-height:1.95;
+margin-bottom:20px;
+}
+.about-features{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:12px;
+margin-top:35px;
+}
+.about-feature{
+padding:20px;
+background:
+rgba(255,255,255,.025);
+border:
+1px solid var(--border);
+border-radius:13px;
+transition:.35s;
+}
+.about-feature:hover{
+transform:translateY(-5px);
+border-color:
+rgba(201,164,108,.3);
+}
+.about-feature i{
+color:var(--gold);
+margin-bottom:10px;
+}
+.about-feature strong{
+display:block;
+font-size:12px;
+}
+.about-feature span{
+font-size:10px;
+color:var(--gray);
+}
+/* =========================================================
+   11. HAARSTIJLEN
+========================================================= */
+.hairstyles{
+background:#0b0b0b;
+}
+.style-filters{
+display:flex;
+flex-wrap:wrap;
+gap:8px;
+margin-bottom:30px;
+}
+.filter-btn{
+padding:10px 16px;
+border-radius:100px;
+border:
+1px solid var(--border);
+background:transparent;
+color:#999;
+font-size:10px;
+transition:.3s;
+}
+.filter-btn:hover,
+.filter-btn.active{
+background:var(--gold);
+border-color:var(--gold);
+color:#000;
+}
+.style-grid{
+display:grid;
+grid-template-columns:
+repeat(4,1fr);
+gap:15px;
+}
+.style-card{
+position:relative;
+height:390px;
+overflow:hidden;
+border-radius:var(--radius);
+background:var(--card);
+}
+.style-card img{
+height:100%;
+object-fit:cover;
+transition:
+transform .8s var(--ease);
+}
+.style-card::after{
+content:"";
+position:absolute;
+inset:0;
+background:
+linear-gradient(
+to top,
+rgba(0,0,0,.85),
+transparent 60%
+);
+}
+.style-card:hover img{
+transform:scale(1.08);
+}
+.style-info{
+position:absolute;
+bottom:20px;
+left:20px;
+z-index:2;
+}
+.style-info span{
+font-size:8px;
+text-transform:uppercase;
+letter-spacing:2px;
+color:var(--gold-light);
+}
+.style-info h3{
+font-family:
+"Playfair Display",serif;
+font-size:22px;
+}
+/* =========================================================
+   12. PRIJZEN
+========================================================= */
+.pricing{
+background:var(--black);
+}
+.pricing-grid{
+display:grid;
+grid-template-columns:
+repeat(3,1fr);
+gap:18px;
+}
+.price-card{
+position:relative;
+padding:35px;
+border:
+1px solid var(--border);
+border-radius:var(--radius);
+background:
+linear-gradient(
+145deg,
+rgba(255,255,255,.04),
+rgba(255,255,255,.01)
+);
+transition:.4s var(--ease);
+}
+.price-card:hover{
+transform:translateY(-8px);
+border-color:
+rgba(201,164,108,.35);
+box-shadow:var(--shadow);
+}
+.price-card.featured{
+border-color:
+rgba(201,164,108,.5);
+transform:translateY(-10px);
+}
+.price-card.featured:hover{
+transform:
+translateY(-17px);
+}
+.popular{
+position:absolute;
+top:18px;
+right:18px;
+font-size:8px;
+text-transform:uppercase;
+letter-spacing:1.5px;
+background:var(--gold);
+color:#000;
+padding:6px 9px;
+border-radius:100px;
+}
+.price-card h3{
+font-family:
+"Playfair Display",serif;
+font-size:27px;
+margin-bottom:8px;
+}
+.price{
+font-family:
+"Playfair Display",serif;
+font-size:39px;
+color:var(--gold-light);
+margin:15px 0 20px;
+}
+.price small{
+font-family:
+"DM Sans",sans-serif;
+font-size:10px;
+color:var(--gray);
+}
+.price-list{
+list-style:none;
+margin-bottom:30px;
+}
+.price-list li{
+padding:9px 0;
+border-bottom:
+1px solid var(--border);
+font-size:11px;
+color:#aaa;
+}
+.price-list i{
+color:var(--gold);
+margin-right:8px;
+}
+/* =========================================================
+   13. LOSSE BEHANDELINGEN
+========================================================= */
+.treatments{
+background:var(--black-2);
+}
+.treatment-list{
+border-top:
+1px solid var(--border);
+}
+.treatment{
+display:grid;
+grid-template-columns:
+60px 1fr auto;
+align-items:center;
+gap:25px;
+padding:25px 10px;
+border-bottom:
+1px solid var(--border);
+transition:.3s;
+}
+.treatment:hover{
+background:
+rgba(201,164,108,.035);
+padding-left:20px;
+padding-right:20px;
+}
+.treatment-number{
+font-family:
+"Playfair Display",serif;
+color:var(--gold);
+font-size:13px;
+}
+.treatment-name{
+font-family:
+"Playfair Display",serif;
+font-size:23px;
+}
+.treatment-desc{
+font-size:10px;
+color:var(--gray);
+}
+.treatment-price{
+font-family:
+"Playfair Display",serif;
+font-size:20px;
+color:var(--gold-light);
+}
+/* =========================================================
+   14. PORTFOLIO
+========================================================= */
+.portfolio{
+background:#0b0b0b;
+}
+.portfolio-grid{
+display:grid;
+grid-template-columns:
+1.15fr .85fr .85fr;
+gap:15px;
+}
+.portfolio-item{
+position:relative;
+height:540px;
+overflow:hidden;
+border-radius:var(--radius);
+}
+.portfolio-column{
+display:flex;
+flex-direction:column;
+gap:15px;
+}
+.portfolio-item.small{
+height:262px;
+}
+.portfolio-item img{
+height:100%;
+object-fit:cover;
+transition:
+transform .9s var(--ease);
+}
+.portfolio-item:hover img{
+transform:scale(1.08);
+}
+.portfolio-item::after{
+content:"";
+position:absolute;
+inset:0;
+background:
+linear-gradient(
+to top,
+rgba(0,0,0,.8),
+transparent 55%
+);
+}
+.portfolio-caption{
+position:absolute;
+z-index:2;
+left:22px;
+bottom:20px;
+}
+.portfolio-caption span{
+font-size:8px;
+text-transform:uppercase;
+letter-spacing:2px;
+color:var(--gold-light);
+}
+.portfolio-caption strong{
+display:block;
+font-family:
+"Playfair Display",serif;
+font-size:23px;
+}
+/* =========================================================
+   15. PROCESS
+========================================================= */
+.process{
+background:var(--black);
+}
+.process-grid{
+display:grid;
+grid-template-columns:
+repeat(4,1fr);
+gap:14px;
+}
+.process-card{
+min-height:250px;
+padding:30px;
+border:
+1px solid var(--border);
+border-radius:var(--radius);
+background:
+rgba(255,255,255,.02);
+transition:.35s;
+}
+.process-card:hover{
+transform:translateY(-7px);
+border-color:
+rgba(201,164,108,.3);
+}
+.process-number{
+font-size:9px;
+letter-spacing:2px;
+color:var(--gold);
+margin-bottom:30px;
+}
+.process-card h3{
+font-family:
+"Playfair Display",serif;
+font-size:25px;
+margin-bottom:10px;
+}
+.process-card p{
+font-size:11px;
+color:var(--gray);
+}
+/* =========================================================
+   16. STATISTICS
+========================================================= */
+.stats{
+background:
+linear-gradient(
+135deg,
+#111,
+#090909
+);
+border-top:
+1px solid var(--border);
+border-bottom:
+1px solid var(--border);
+}
+.stats-grid{
+display:grid;
+grid-template-columns:
+repeat(4,1fr);
+}
+.big-stat{
+text-align:center;
+padding:25px;
+border-right:
+1px solid var(--border);
+}
+.big-stat:last-child{
+border-right:0;
+}
+.big-stat strong{
+font-family:
+"Playfair Display",serif;
+font-size:50px;
+color:var(--gold-light);
+}
+.big-stat span{
+display:block;
+font-size:9px;
+text-transform:uppercase;
+letter-spacing:2px;
+color:var(--gray);
+}
+/* =========================================================
+   17. REVIEWS
+========================================================= */
+.reviews{
+background:var(--black-2);
+}
+.review-grid{
+display:grid;
+grid-template-columns:
+repeat(3,1fr);
+gap:18px;
+}
+.review{
+padding:30px;
+border:
+1px solid var(--border);
+border-radius:var(--radius);
+background:
+rgba(255,255,255,.02);
+}
+.stars{
+color:var(--gold);
+letter-spacing:3px;
+font-size:11px;
+margin-bottom:20px;
+}
+.review p{
+font-family:
+"Playfair Display",serif;
+font-style:italic;
+font-size:18px;
+line-height:1.6;
+color:#ddd;
+margin-bottom:25px;
+}
+.reviewer{
+display:flex;
+align-items:center;
+gap:12px;
+}
+.avatar{
+width:40px;
+height:40px;
+display:grid;
+place-items:center;
+border-radius:50%;
+background:
+var(--gold);
+color:#000;
+font-weight:700;
+font-size:12px;
+}
+.reviewer strong{
+font-size:11px;
+}
+.reviewer span{
+display:block;
+font-size:9px;
+color:var(--gray);
+}
+/* =========================================================
+   18. FAQ
+========================================================= */
+.faq{
+background:var(--black);
+}
+.faq-list{
+max-width:850px;
+margin:auto;
+}
+.faq-item{
+border-bottom:
+1px solid var(--border);
+}
+.faq-question{
+width:100%;
+padding:23px 0;
+display:flex;
+justify-content:space-between;
+align-items:center;
+background:none;
+border:0;
+color:white;
+font-size:14px;
+text-align:left;
+}
+.faq-question i{
+color:var(--gold);
+transition:.3s;
+}
+.faq-answer{
+max-height:0;
+overflow:hidden;
+transition:
+max-height .4s ease;
+}
+.faq-answer p{
+padding-bottom:22px;
+font-size:12px;
+color:var(--gray);
+max-width:750px;
+}
+.faq-item.open
+.faq-answer{
+max-height:200px;
+}
+.faq-item.open
+.faq-question i{
+transform:rotate(45deg);
+}
+/* =========================================================
+   19. BOOKING
+========================================================= */
+.booking{
+background:
+linear-gradient(
+135deg,
+#15120e,
+#080808
+);
+}
+.booking-box{
+display:grid;
+grid-template-columns:
+.9fr 1.1fr;
+gap:50px;
+padding:55px;
+border:
+1px solid rgba(201,164,108,.2);
+border-radius:25px;
+background:
+rgba(255,255,255,.025);
+box-shadow:var(--shadow);
+}
+.booking-copy h2{
+font-family:
+"Playfair Display",serif;
+font-size:50px;
+line-height:1.05;
+margin-bottom:18px;
+}
+.booking-copy p{
+font-size:13px;
+color:var(--gray);
+max-width:400px;
+}
+.booking-benefits{
+list-style:none;
+margin-top:25px;
+}
+.booking-benefits li{
+font-size:11px;
+color:#bbb;
+padding:8px 0;
+}
+.booking-benefits i{
+color:var(--gold);
+margin-right:9px;
+}
+.booking-form{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:13px;
+}
+.form-group{
+display:flex;
+flex-direction:column;
+gap:7px;
+}
+.form-group.full{
+grid-column:1/-1;
+}
+.form-group label{
+font-size:9px;
+text-transform:uppercase;
+letter-spacing:1.5px;
+color:#888;
+}
+.form-group input,
+.form-group select,
+.form-group textarea{
+width:100%;
+border:
+1px solid var(--border);
+background:#0b0b0b;
+color:white;
+border-radius:10px;
+padding:13px;
+outline:none;
+font-size:11px;
+transition:.3s;
+}
+.form-group textarea{
+height:100px;
+resize:vertical;
+}
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus{
+border-color:
+rgba(201,164,108,.6);
+box-shadow:
+0 0 0 3px
+rgba(201,164,108,.06);
+}
+/* =========================================================
+   20. CTA
+========================================================= */
+.cta{
+position:relative;
+overflow:hidden;
+text-align:center;
+background:
+linear-gradient(
+rgba(0,0,0,.8),
+rgba(0,0,0,.9)
+),
+url("https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?auto=format&fit=crop&w=2200&q=90")
+center/cover;
+}
+.cta-ring{
+position:absolute;
+width:600px;
+height:600px;
+border:
+1px solid rgba(201,164,108,.1);
+border-radius:50%;
+left:50%;
+top:50%;
+transform:
+translate(-50%,-50%);
+animation:
+pulseRing 5s ease-in-out infinite;
+}
+@keyframes pulseRing{
+0%,100%{
+transform:
+translate(-50%,-50%) scale(1);
+}
+50%{
+transform:
+translate(-50%,-50%) scale(1.08);
+}
+}
+.cta-content{
+position:relative;
+z-index:2;
+}
+.cta h2{
+font-family:
+"Playfair Display",serif;
+font-size:
+clamp(45px,7vw,82px);
+line-height:1;
+margin-bottom:20px;
+}
+.cta p{
+color:#aaa;
+font-size:14px;
+margin-bottom:30px;
+}
+/* =========================================================
+   21. FOOTER
+========================================================= */
+footer{
+background:#050505;
+padding:65px 0 25px;
+border-top:
+1px solid var(--border);
+}
+.footer-grid{
+display:grid;
+grid-template-columns:
+1.5fr 1fr 1fr 1fr;
+gap:50px;
+padding-bottom:50px;
+border-bottom:
+1px solid var(--border);
+}
+.footer-brand p{
+max-width:350px;
+font-size:12px;
+color:#777;
+margin-top:18px;
+}
+.footer-title{
+font-size:9px;
+text-transform:uppercase;
+letter-spacing:2px;
+margin-bottom:18px;
+color:white;
+}
+.footer-links{
+list-style:none;
+}
+.footer-links li{
+margin-bottom:8px;
+}
+.footer-links a{
+font-size:11px;
+color:#777;
+transition:.3s;
+}
+.footer-links a:hover{
+color:var(--gold-light);
+}
+.footer-bottom{
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding-top:25px;
+gap:20px;
+}
+.copyright{
+font-size:9px;
+color:#444;
+}
+.socials{
+display:flex;
+gap:8px;
+}
+.socials a{
+width:38px;
+height:38px;
+display:grid;
+place-items:center;
+border:
+1px solid var(--border);
+border-radius:50%;
+color:#888;
+transition:.3s;
+}
+.socials a:hover{
+background:var(--gold);
+border-color:var(--gold);
+color:#000;
+transform:
+translateY(-4px);
+}
+/* =========================================================
+   22. BACK TO TOP
+========================================================= */
+.back-top{
+position:fixed;
+right:22px;
+bottom:22px;
+width:45px;
+height:45px;
+display:grid;
+place-items:center;
+border-radius:50%;
+background:var(--gold);
+color:#000;
+z-index:500;
+opacity:0;
+visibility:hidden;
+transform:translateY(15px);
+transition:.35s;
+}
+.back-top.show{
+opacity:1;
+visibility:visible;
+transform:translateY(0);
+}
+/* =========================================================
+   23. REVEAL ANIMATIONS
+========================================================= */
+.reveal{
+opacity:0;
+transform:translateY(35px);
+transition:
+opacity .8s ease,
+transform .8s var(--ease);
+}
+.reveal.visible{
+opacity:1;
+transform:translateY(0);
+}
+/* =========================================================
+   24. FLOATING ANIMATION
+========================================================= */
+.float{
+animation:
+floating 4s ease-in-out infinite;
+}
+@keyframes floating{
+0%,100%{
+transform:translateY(0);
+}
+50%{
+transform:translateY(-9px);
+}
+}
+/* =========================================================
+   25. RESPONSIVE TABLET
+========================================================= */
+@media(max-width:1000px){
+.nav-links{
+position:absolute;
+top:75px;
+left:5%;
+width:90%;
+display:none;
+flex-direction:column;
+align-items:stretch;
+gap:0;
+padding:20px;
+background:
+rgba(8,8,8,.97);
+backdrop-filter:blur(20px);
+border:
+1px solid var(--border);
+border-radius:15px;
+}
+.nav-links.active{
+display:flex;
+}
+.nav-links li{
+border-bottom:
+1px solid var(--border);
+}
+.nav-links li:last-child{
+border-bottom:0;
+}
+.nav-links a{
+display:block;
+padding:12px;
+}
+.nav-cta{
+text-align:center;
+margin-top:7px;
+}
+.menu-toggle{
+display:block;
+}
+.style-grid{
+grid-template-columns:
+repeat(2,1fr);
+}
+.pricing-grid{
+grid-template-columns:1fr;
+}
+.price-card.featured{
+transform:none;
+}
+.process-grid{
+grid-template-columns:
+repeat(2,1fr);
+}
+.review-grid{
+grid-template-columns:1fr;
+}
+.booking-box{
+grid-template-columns:1fr;
+}
+.footer-grid{
+grid-template-columns:
+1fr 1fr;
+}
+}
+/* =========================================================
+   26. MOBILE
+========================================================= */
+@media(max-width:600px){
+section{
+padding:80px 0;
+}
+.hero{
+min-height:850px;
+background-position:
+65% center;
+}
+.hero h1{
+font-size:54px;
+letter-spacing:-2px;
+}
+.hero-description{
+font-size:13px;
+}
+.hero-buttons{
+flex-direction:column;
+align-items:stretch;
+}
+.hero-stats{
+gap:22px;
+}
+.hero-stat strong{
+font-size:21px;
+}
+.section-header{
+display:block;
+margin-bottom:40px;
+}
+.section-description{
+margin-top:18px;
+}
+.about-grid{
+grid-template-columns:1fr;
+gap:55px;
+}
+.about-image img{
+height:450px;
+}
+.about-badge{
+right:12px;
+bottom:20px;
+}
+.about-features{
+grid-template-columns:1fr;
+}
+.style-grid{
+grid-template-columns:1fr 1fr;
+}
+.style-card{
+height:290px;
+}
+.portfolio-grid{
+grid-template-columns:1fr;
+}
+.portfolio-item{
+height:430px;
+}
+.portfolio-column{
+display:contents;
+}
+.portfolio-item.small{
+height:300px;
+}
+.process-grid{
+grid-template-columns:1fr;
+}
+.stats-grid{
+grid-template-columns:1fr 1fr;
+}
+.big-stat{
+border-bottom:
+1px solid var(--border);
+}
+.big-stat:nth-child(2){
+border-right:0;
+}
+.big-stat strong{
+font-size:37px;
+}
+.booking-box{
+padding:28px;
+}
+.booking-copy h2{
+font-size:40px;
+}
+.booking-form{
+grid-template-columns:1fr;
+}
+.form-group.full{
+grid-column:auto;
+}
+.footer-grid{
+grid-template-columns:1fr;
+gap:35px;
+}
+.footer-bottom{
+flex-direction:column;
+text-align:center;
+}
+}
+/* =========================================================
+   27. REDUCED MOTION
+========================================================= */
+@media(prefers-reduced-motion:reduce){
+*{
+animation-duration:.01ms!important;
+animation-iteration-count:1!important;
+scroll-behavior:auto!important;
+transition-duration:.01ms!important;
+}
+}
+</style>
+</head>
+<body>
+<!-- =========================================================
+     GLOBAL EFFECTS
+========================================================= -->
+<div class="noise"></div>
+<div class="scroll-progress"
+id="scrollProgress"></div>
+<div class="cursor-glow"
+id="cursorGlow"></div>
+<!-- =========================================================
+     HEADER
+========================================================= -->
+<header id="header">
+<div class="container">
+<nav>
+<a href="#home" class="brand">
+<div class="brand-logo">
+K
+</div>
+<div>
+<div class="brand-name">
+Kapper Online
+</div>
+<span class="brand-sub">
+Web Bouwers
+</span>
+</div>
+</a>
+<button
+class="menu-toggle"
+id="menuToggle"
+aria-label="Menu">
+<i class="fa-solid fa-bars"></i>
+</button>
+<ul class="nav-links"
+id="navLinks">
+<li>
+<a href="#home">Home</a>
+</li>
+<li>
+<a href="#over-ons">Over ons</a>
+</li>
+<li>
+<a href="#haarstijlen">Haarstijlen</a>
+</li>
+<li>
+<a href="#prijzen">Prijzen</a>
+</li>
+<li>
+<a href="#portfolio">Portfolio</a>
+</li>
+<li>
+<a href="#reviews">Reviews</a>
+</li>
+<li>
+<a href="#faq">FAQ</a>
+</li>
+<li>
+<a href="#afspraak" class="nav-cta">
+Start website
+<i class="fa-solid fa-arrow-right"></i>
+</a>
+</li>
+</ul>
+</nav>
+</div>
+</header>
+<!-- =========================================================
+     HERO
+========================================================= -->
+<main>
+<section class="hero"
+id="home">
+<div class="hero-orbit"></div>
+<div class="container">
+<div class="hero-content reveal">
+<div class="hero-label">
+Premium webdesign voor kappers
+</div>
+<h1>
+Jouw salon.
+<br>
+Jouw stijl.
+<br>
+<span>Jouw website.</span>
+</h1>
+<p class="hero-description">
+Kapper Online Web Bouwers maakt premium websites
+voor kappers, barbers en salons. Geen standaard template,
+maar een online uitstraling die net zo professioneel is
+als het werk in jouw salon.
+</p>
+<div class="hero-buttons">
+<a href="#afspraak"
+class="btn btn-primary">
+Start jouw website
+<i class="fa-solid fa-arrow-right"></i>
+</a>
+<a href="#portfolio"
+class="btn btn-outline">
+Bekijk portfolio
+<i class="fa-solid fa-images"></i>
+</a>
+</div>
+<div class="hero-stats">
+<div class="hero-stat">
+<strong>Premium</strong>
+<span>Webdesign</span>
+</div>
+<div class="hero-stat">
+<strong>100%</strong>
+<span>Responsive</span>
+</div>
+<div class="hero-stat">
+<strong>24/7</strong>
+<span>Online zichtbaar</span>
+</div>
+<div class="hero-stat">
+<strong>∞</strong>
+<span>Creativiteit</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- =========================================================
+     MARQUEE
+========================================================= -->
+<div class="marquee">
+<div class="marquee-track">
+<div class="marquee-item">
+Premium websites
+<i class="fa-solid fa-star"></i>
+</div>
+<div class="marquee-item">
+Webdesign voor kappers
+<i class="fa-solid fa-star"></i>
+</div>
+<div class="marquee-item">
+Meer online afspraken
+<i class="fa-solid fa-star"></i>
+</div>
+<div class="marquee-item">
+Mobiel geoptimaliseerd
+<i class="fa-solid fa-star"></i>
+</div>
+<div class="marquee-item">
+Premium websites
+<i class="fa-solid fa-star"></i>
+</div>
+<div class="marquee-item">
+Webdesign voor kappers
+<i class="fa-solid fa-star"></i>
+</div>
+<div class="marquee-item">
+Meer online afspraken
+<i class="fa-solid fa-star"></i>
+</div>
+<div class="marquee-item">
+Mobiel geoptimaliseerd
+<i class="fa-solid fa-star"></i>
+</div>
+</div>
+</div>
+<!-- =========================================================
+     OVER ONS
+========================================================= -->
+<section class="about"
+id="over-ons">
+<div class="container">
+<div class="section-header reveal">
+<div>
+<div class="section-label">
+01 — Over ons
+</div>
+<h2 class="section-title">
+Geen standaard<br>
+kapperswebsite.
+</h2>
+</div>
+<p class="section-description">
+Een kapsalon is meer dan een knipbeurt.
+Daarom bouwen wij websites die jouw merk,
+stijl en vakmanschap online laten voelen.
+</p>
+</div>
+<div class="about-grid">
+<div class="about-image reveal">
+<img
+src="https://images.unsplash.com/photo-1599351431202-1e0f0137899a?auto=format&fit=crop&w=1300&q=90"
+alt="Premium barbershop"
+loading="lazy">
+<div class="about-badge float">
+<strong>Premium</strong>
+<span>
+Digital experience
+</span>
+</div>
+</div>
+<div class="about-copy reveal">
+<p>
+Kapper Online Web Bouwers richt zich volledig op de
+beauty- en kappersbranche. Daardoor begrijpen we wat
+een bezoeker nodig heeft voordat hij of zij een afspraak
+maakt.
+</p>
+<p>
+Sterke fotografie, duidelijke behandelingen, prijzen,
+reviews en een opvallende afspraakknop komen samen
+in één professionele online ervaring.
+</p>
+<div class="about-features">
+<div class="about-feature">
+<i class="fa-solid fa-gem"></i>
+<strong>
+Premium design
+</strong>
+<span>
+Geen generieke templates
+</span>
+</div>
+<div class="about-feature">
+<i class="fa-solid fa-mobile-screen"></i>
+<strong>
+Mobile first
+</strong>
+<span>
+Perfect op smartphones
+</span>
+</div>
+<div class="about-feature">
+<i class="fa-solid fa-bolt"></i>
+<strong>
+Modern & snel
+</strong>
+<span>
+Geoptimaliseerde structuur
+</span>
+</div>
+<div class="about-feature">
+<i class="fa-solid fa-calendar-check"></i>
+<strong>
+Meer afspraken
+</strong>
+<span>
+CTA's gericht op conversie
+</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- =========================================================
+     HAARSTIJLEN
+========================================================= -->
+<section class="hairstyles"
+id="haarstijlen">
+<div class="container">
+<div class="section-header reveal">
+<div>
+<div class="section-label">
+02 — Haarstijlen
+</div>
+<h2 class="section-title">
+Voor iedere<br>
+haartype & stijl.
+</h2>
+</div>
+<p class="section-description">
+Een moderne website moet laten zien dat jouw salon
+iedere klant begrijpt. Van afro en krullen tot blond,
+balayage en fades.
+</p>
+</div>
+<div class="style-filters reveal">
+<button class="filter-btn active"
+data-filter="all">
+Alles
+</button>
+<button class="filter-btn"
+data-filter="dames">
+Dames
+</button>
+<button class="filter-btn"
+data-filter="heren">
+Heren
+</button>
+<button class="filter-btn"
+data-filter="krullen">
+Krullend haar
+</button>
+<button class="filter-btn"
+data-filter="afro">
+Afro
+</button>
+<button class="filter-btn"
+data-filter="blond">
+Blond haar
+</button>
+<button class="filter-btn"
+data-filter="kleur">
+Kleur
+</button>
+</div>
+<div class="style-grid">
+<div class="style-card reveal"
+data-category="krullen">
+<img
+src="https://images.unsplash.com/photo-1620331311520-246422fd82f9?auto=format&fit=crop&w=1000&q=90"
+alt="Krullend haar"
+loading="lazy">
+<div class="style-info">
+<span>
+Krullen
+</span>
+<h3>
+Curly
+</h3>
+</div>
+</div>
+<div class="style-card reveal"
+data-category="blond">
+<img
+src="https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?auto=format&fit=crop&w=1000&q=90"
+alt="Blond haar"
+loading="lazy">
+<div class="style-info">
+<span>
+Color
+</span>
+<h3>
+Blond
+</h3>
+</div>
+</div>
+<div class="style-card reveal"
+data-category="afro">
+<img
+src="https://images.unsplash.com/photo-1580618672591-eb180b1a973f?auto=format&fit=crop&w=1000&q=90"
+alt="Afro kapsel"
+loading="lazy">
+<div class="style-info">
+<span>
+Texture
+</span>
+<h3>
+Afro
+</h3>
+</div>
+</div>
+<div class="style-card reveal"
+data-category="heren">
+<img
+src="https://images.unsplash.com/photo-1621605815971-fbc98d665033?auto=format&fit=crop&w=1000&q=90"
+alt="Fade kapsel"
+loading="lazy">
+<div class="style-info">
+<span>
+Men
+</span>
+<h3>
+Fade
+</h3>
+</div>
+</div>
+<div class="style-card reveal"
+data-category="kleur">
+<img
+src="https://images.unsplash.com/photo-1562322140-8baeececf3df?auto=format&fit=crop&w=1000&q=90"
+alt="Balayage"
+loading="lazy">
+<div class="style-info">
+<span>
+Color
+</span>
+<h3>
+Balayage
+</h3>
+</div>
+</div>
+<div class="style-card reveal"
+data-category="dames">
+<img
+src="https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=1000&q=90"
+alt="Dames kapsel"
+loading="lazy">
+<div class="style-info">
+<span>
+Women
+</span>
+<h3>
+Long Hair
+</h3>
+</div>
+</div>
+<div class="style-card reveal"
+data-category="heren">
+<img
+src="https://images.unsplash.com/photo-1599351431613-18ef1fdd27e1?auto=format&fit=crop&w=1000&q=90"
+alt="Heren kapsel"
+loading="lazy">
+<div class="style-info">
+<span>
+Men
+</span>
+<h3>
+Classic Cut
+</h3>
+</div>
+</div>
+<div class="style-card reveal"
+data-category="afro">
+<img
+src="https://images.unsplash.com/photo-1593702295094-aea8c5e18c0c?auto=format&fit=crop&w=1000&q=90"
+alt="Vlecht kapsel"
+loading="lazy">
+<div class="style-info">
+<span>
+Texture
+</span>
+<h3>
+Braids
+</h3>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- =========================================================
+     PRIJZEN
+========================================================= -->
+<section class="pricing"
+id="prijzen">
+<div class="container">
+<div class="section-header reveal">
+<div>
+<div class="section-label">
+03 — Website pakketten
+</div>
+<h2 class="section-title">
+Een pakket voor<br>
+iedere salon.
+</h2>
+</div>
+<p class="section-description">
+Kies een basispakket of laat een volledig maatwerkconcept
+ontwikkelen. Alle websites zijn responsive en gebouwd
+met een premium uitstraling.
+</p>
+</div>
+<div class="pricing-grid">
+<div class="price-card reveal">
+<h3>
+Starter
+</h3>
+<p style="font-size:11px;color:#777;">
+Voor startende kappers
+</p>
+<div class="price">
+€499
+<small>vanaf</small>
+</div>
+<ul class="price-list">
+<li>
+<i class="fa-solid fa-check"></i>
+One-page website
+</li>
+<li>
+<i class="fa-solid fa-check"></i>
+Responsive design
+</li>
+<li>
+<i class="fa-solid fa-check"></i>
+Contactgegevens
+</li>
+<li>
+<i class="fa-solid fa-check"></i>
+Diensten & prijzen
+</li>
+<li>
+<i class="fa-solid fa-check"></i>
+Social media links
+</li>
+<li>
+<i class="fa-solid fa-check"></i>
+Basis SEO
+</li>
+</ul>
+<a href="#afspraak"
+class="btn btn-outline">
+Kies Starter
+</a>
+</div>
+<div class="price-card featured reveal">
+<div class="popular">
+Populair
+</div>
+<h3>
+Premium
+</h3>
+<p style="font-size:11px;color:#777;">
+Voor groeiende salons
+</p>
+<div class="price">
+€899
+<small>vanaf</small>
+</div>
+<ul class="price-list">
+<li>
+<i class="fa-solid fa-check"></i>
+Alles uit Starter
+</li>
+<li>
+<i class="fa-solid fa-check"></i>
+Meerdere pagina's
+</li>
+<li>
+<i class="fa-solid fa-check"></i>
+Portfolio & galerij
+</li>
+<li>
+<i class="fa-solid fa-check"></i>
+Reviews
+</li>
+<li>
+<i class="fa-solid fa-check"></i>
+Online afspraak CTA
+</li>
+<li>
+<i class="fa-solid fa-check"></i>
+Premium animaties
+</li>
+</ul>
+<a href="#afspraak"
+class="btn btn-primary">
+Kies Premium
+</a>
+</div>
+<div class="price-card reveal">
+<h3>
+Ultimate
+</h3>
+<p style="font-size:11px;color:#777;">
+Voor premium salons
+</p>
+<div class="price">
+€1.499
+<small>vanaf</small>
+</div>
+<ul class="price-list">
+<li>
+<i class="fa-solid fa-check"></i>
+Alles uit Premium
+</li>
+<li>
+<i class="fa-solid fa-check"></i>
+Volledig maatwerk
+</li>
+<li>
+<i class="fa-solid fa-check"></i>
+Geavanceerde animaties
+</li>
+<li>
+<i class="fa-solid fa-check"></i>
+Booking integratie
+</li>
+<li>
+<i class="fa-solid fa-check"></i>
+Conversie-optimalisatie
+</li>
+<li>
+<i class="fa-solid fa-check"></i>
+Uitgebreide SEO
+</li>
+</ul>
+<a href="#afspraak"
+class="btn btn-outline">
+Kies Ultimate
+</a>
+</div>
+</div>
+</div>
+</section>
+<!-- =========================================================
+     BEHANDELINGEN
+========================================================= -->
+<section class="treatments">
+<div class="container">
+<div class="section-header reveal">
+<div>
+<div class="section-label">
+04 — Voorbeeld prijslijst
+</div>
+<h2 class="section-title">
+Behandelingen<br>
+& prijzen.
+</h2>
+</div>
+<p class="section-description">
+Een overzichtelijke prijslijst geeft bezoekers
+direct duidelijkheid. Hieronder een voorbeeld
+voor een moderne salonwebsite.
+</p>
+</div>
+<div class="treatment-list reveal">
+<div class="treatment">
+<div class="treatment-number">
+01
+</div>
+<div>
+<div class="treatment-name">
+Dames knippen
+</div>
+<div class="treatment-desc">
+Wassen, knippen & föhnen
+</div>
+</div>
+<div class="treatment-price">
+€39,50
+</div>
+</div>
+<div class="treatment">
+<div class="treatment-number">
+02
+</div>
+<div>
+<div class="treatment-name">
+Heren knippen
+</div>
+<div class="treatment-desc">
+Knippen & styling
+</div>
+</div>
+<div class="treatment-price">
+€29,50
+</div>
+</div>
+<div class="treatment">
+<div class="treatment-number">
+03
+</div>
+<div>
+<div class="treatment-name">
+Fade / Skin Fade
+</div>
+<div class="treatment-desc">
+Precisie fade & styling
+</div>
+</div>
+<div class="treatment-price">
+€32,50
+</div>
+</div>
+<div class="treatment">
+<div class="treatment-number">
+04
+</div>
+<div>
+<div class="treatment-name">
+Krullen knippen
+</div>
+<div class="treatment-desc">
+Curl-focused kniptechniek
+</div>
+</div>
+<div class="treatment-price">
+€45
+</div>
+</div>
+<div class="treatment">
+<div class="treatment-number">
+05
+</div>
+<div>
+<div class="treatment-name">
+Afro styling
+</div>
+<div class="treatment-desc">
+Texture care & styling
+</div>
+</div>
+<div class="treatment-price">
+€50
+</div>
+</div>
+<div class="treatment">
+<div class="treatment-number">
+06
+</div>
+<div>
+<div class="treatment-name">
+Balayage
+</div>
+<div class="treatment-desc">
+Vanafprijs afhankelijk van lengte
+</div>
+</div>
+<div class="treatment-price">
+€95
+</div>
+</div>
+<div class="treatment">
+<div class="treatment-number">
+07
+</div>
+<div>
+<div class="treatment-name">
+Blond treatment
+</div>
+<div class="treatment-desc">
+Highlights / full blond
+</div>
+</div>
+<div class="treatment-price">
+€110
+</div>
+</div>
+<div class="treatment">
+<div class="treatment-number">
+08
+</div>
+<div>
+<div class="treatment-name">
+Styling
+</div>
+<div class="treatment-desc">
+Event, feest of dagelijks
+</div>
+</div>
+<div class="treatment-price">
+€30
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- =========================================================
+     PORTFOLIO
+========================================================= -->
+<section class="portfolio"
+id="portfolio">
+<div class="container">
+<div class="section-header reveal">
+<div>
+<div class="section-label">
+05 — Portfolio
+</div>
+<h2 class="section-title">
+Design dat<br>
+blijft hangen.
+</h2>
+</div>
+<p class="section-description">
+Voorbeelden van de premium uitstraling
+die mogelijk is voor salons, barbers en
+beautybedrijven.
+</p>
+</div>
+<div class="portfolio-grid">
+<div class="portfolio-item reveal">
+<img
+src="https://images.unsplash.com/photo-1562322140-8baeececf3df?auto=format&fit=crop&w=1400&q=90"
+alt="Premium salon"
+loading="lazy">
+<div class="portfolio-caption">
+<span>
+Salon
+</span>
+<strong>
+Modern Studio
+</strong>
+</div>
+</div>
+<div class="portfolio-column">
+<div class="portfolio-item small reveal">
+<img
+src="https://images.unsplash.com/photo-1599351431202-1e0f0137899a?auto=format&fit=crop&w=1000&q=90"
+alt="Barber"
+loading="lazy">
+<div class="portfolio-caption">
+<span>
+Barber
+</span>
+<strong>
+Black Label
+</strong>
+</div>
+</div>
+<div class="portfolio-item small reveal">
+<img
+src="https://images.unsplash.com/photo-1621605815971-fbc98d665033?auto=format&fit=crop&w=1000&q=90"
+alt="Fade barber"
+loading="lazy">
+<div class="portfolio-caption">
+<span>
+Men
+</span>
+<strong>
+The Cut
+</strong>
+</div>
+</div>
+</div>
+<div class="portfolio-column">
+<div class="portfolio-item small reveal">
+<img
+src="https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?auto=format&fit=crop&w=1000&q=90"
+alt="Luxury salon"
+loading="lazy">
+<div class="portfolio-caption">
+<span>
+Luxury
+</span>
+<strong>
+Noir Beauty
+</strong>
+</div>
+</div>
+<div class="portfolio-item small reveal">
+<img
+src="https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=1000&q=90"
+alt="Hair salon"
+loading="lazy">
+<div class="portfolio-caption">
+<span>
+Beauty
+</span>
+<strong>
+Studio 24
+</strong>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- =========================================================
+     PROCESS
+========================================================= -->
+<section class="process">
+<div class="container">
+<div class="section-header reveal">
+<div>
+<div class="section-label">
+06 — Werkwijze
+</div>
+<h2 class="section-title">
+Van idee naar<br>
+online merk.
+</h2>
+</div>
+<p class="section-description">
+Een helder proces zonder onnodige ingewikkeldheid.
+Van eerste gesprek tot live website.
+</p>
+</div>
+<div class="process-grid">
+<div class="process-card reveal">
+<div class="process-number">
+STAP 01
+</div>
+<h3>
+Kennismaken
+</h3>
+<p>
+We bespreken jouw salon, stijl,
+doelgroep en online doelen.
+</p>
+</div>
+<div class="process-card reveal">
+<div class="process-number">
+STAP 02
+</div>
+<h3>
+Strategie
+</h3>
+<p>
+We bepalen structuur, content,
+CTA's en de uitstraling.
+</p>
+</div>
+<div class="process-card reveal">
+<div class="process-number">
+STAP 03
+</div>
+<h3>
+Design
+</h3>
+<p>
+We bouwen een unieke premium
+digitale uitstraling.
+</p>
+</div>
+<div class="process-card reveal">
+<div class="process-number">
+STAP 04
+</div>
+<h3>
+Live
+</h3>
+<p>
+Na goedkeuring zetten we jouw
+website professioneel online.
+</p>
+</div>
+</div>
+</div>
+</section>
+<!-- =========================================================
+     STATISTICS
+========================================================= -->
+<section class="stats">
+<div class="container">
+<div class="stats-grid">
+<div class="big-stat reveal">
+<strong
+class="counter"
+data-target="100">
+0
+</strong>
+<span>
+Responsive
+</span>
+</div>
+<div class="big-stat reveal">
+<strong>
+24/7
+</strong>
+<span>
+Online zichtbaar
+</span>
+</div>
+<div class="big-stat reveal">
+<strong
+class="counter"
+data-target="30">
+0
+</strong>
+<span>
+Features mogelijk
+</span>
+</div>
+<div class="big-stat reveal">
+<strong>
+∞
+</strong>
+<span>
+Maatwerk
+</span>
+</div>
+</div>
+</div>
+</section>
+<!-- =========================================================
+     REVIEWS
+========================================================= -->
+<section class="reviews"
+id="reviews">
+<div class="container">
+<div class="section-header reveal">
+<div>
+<div class="section-label">
+07 — Reviews
+</div>
+<h2 class="section-title">
+Wat klanten<br>
+kunnen ervaren.
+</h2>
+</div>
+<p class="section-description">
+Voorbeeldreviews voor de demo.
+Vervang deze later eenvoudig door echte klantreviews.
+</p>
+</div>
+<div class="review-grid">
+<div class="review reveal">
+<div class="stars">
+★★★★★
+</div>
+<p>
+"Onze nieuwe website voelt eindelijk
+als een verlengstuk van onze salon."
+</p>
+<div class="reviewer">
+<div class="avatar">
+S
+</div>
+<div>
+<strong>
+Sophie
+</strong>
+<span>
+Salon eigenaar
+</span>
+</div>
+</div>
+</div>
+<div class="review reveal">
+<div class="stars">
+★★★★★
+</div>
+<p>
+"Strak, luxe en vooral heel makkelijk
+voor klanten om een afspraak te maken."
+</p>
+<div class="reviewer">
+<div class="avatar">
+M
+</div>
+<div>
+<strong>
+Mike
+</strong>
+<span>
+Barber
+</span>
+</div>
+</div>
+</div>
+<div class="review reveal">
+<div class="stars">
+★★★★★
+</div>
+<p>
+"Precies de premium uitstraling die
+we voor onze salon zochten."
+</p>
+<div class="reviewer">
+<div class="avatar">
+A
+</div>
+<div>
+<strong>
+Amira
+</strong>
+<span>
+Hair stylist
+</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- =========================================================
+     FAQ
+========================================================= -->
+<section class="faq"
+id="faq">
+<div class="container">
+<div class="section-header reveal">
+<div>
+<div class="section-label">
+08 — FAQ
+</div>
+<h2 class="section-title">
+Veelgestelde<br>
+vragen.
+</h2>
+</div>
+<p class="section-description">
+Een goede FAQ haalt twijfels weg en zorgt ervoor
+dat potentiële klanten sneller contact opnemen.
+</p>
+</div>
+<div class="faq-list">
+<div class="faq-item reveal">
+<button class="faq-question">
+Wat kost een website?
+<i class="fa-solid fa-plus"></i>
+</button>
+<div class="faq-answer">
+<p>
+De prijs hangt af van het gewenste pakket,
+aantal pagina's, functionaliteiten en maatwerk.
+De pakketten beginnen vanaf €499.
+</p>
+</div>
+</div>
+<div class="faq-item reveal">
+<button class="faq-question">
+Werkt de website op mobiel?
+<i class="fa-solid fa-plus"></i>
+</button>
+<div class="faq-answer">
+<p>
+Ja. Iedere website wordt responsive opgebouwd
+zodat deze goed werkt op smartphones, tablets
+en desktops.
+</p>
+</div>
+</div>
+<div class="faq-item reveal">
+<button class="faq-question">
+Kan ik mijn eigen foto's gebruiken?
+<i class="fa-solid fa-plus"></i>
+</button>
+<div class="faq-answer">
+<p>
+Ja. Eigen salonfoto's zijn juist ideaal omdat ze
+jouw merk persoonlijker maken. Stockfoto's kunnen
+ook gebruikt worden wanneer dat gewenst is.
+</p>
+</div>
+</div>
+<div class="faq-item reveal">
+<button class="faq-question">
+Kan online boeken worden toegevoegd?
+<i class="fa-solid fa-plus"></i>
+</button>
+<div class="faq-answer">
+<p>
+Ja. Een afspraakknop of externe bookingsoftware
+kan in de website worden geïntegreerd.
+</p>
+</div>
+</div>
+<div class="faq-item reveal">
+<button class="faq-question">
+Kan de website later worden uitgebreid?
+<i class="fa-solid fa-plus"></i>
+</button>
+<div class="faq-answer">
+<p>
+Zeker. Denk bijvoorbeeld aan extra pagina's,
+nieuwe behandelingen, een blog, acties,
+reviews of een uitgebreid boekingssysteem.
+</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- =========================================================
+     BOOKING / CONTACT
+========================================================= -->
+<section class="booking"
+id="afspraak">
+<div class="container">
+<div class="booking-box reveal">
+<div class="booking-copy">
+<div class="section-label">
+09 — Start jouw project
+</div>
+<h2>
+Klaar voor<br>
+een website<br>
+met klasse?
+</h2>
+<p>
+Vertel ons kort wat je nodig hebt.
+Daarna kunnen we samen bepalen welk
+websiteconcept het beste bij jouw salon past.
+</p>
+<ul class="booking-benefits">
+<li>
+<i class="fa-solid fa-check"></i>
+Vrijblijvend kennismaken
+</li>
+<li>
+<i class="fa-solid fa-check"></i>
+Persoonlijk advies
+</li>
+<li>
+<i class="fa-solid fa-check"></i>
+Premium design
+</li>
+<li>
+<i class="fa-solid fa-check"></i>
+Responsive op alle apparaten
+</li>
+</ul>
+</div>
+<form class="booking-form"
+id="bookingForm">
+<div class="form-group">
+<label>
+Naam
+</label>
+<input
+type="text"
+placeholder="Jouw naam"
+required>
+</div>
+<div class="form-group">
+<label>
+Salon
+</label>
+<input
+type="text"
+placeholder="Naam van je salon"
+required>
+</div>
+<div class="form-group">
+<label>
+E-mail
+</label>
+<input
+type="email"
+placeholder="jouw@email.nl"
+required>
+</div>
+<div class="form-group">
+<label>
+Telefoon
+</label>
+<input
+type="tel"
+placeholder="06 12345678">
+</div>
+<div class="form-group">
+<label>
+Website pakket
+</label>
+<select>
+<option>
+Maak een keuze
+</option>
+<option>
+Starter — vanaf €499
+</option>
+<option>
+Premium — vanaf €899
+</option>
+<option>
+Ultimate — vanaf €1.499
+</option>
+<option>
+Maatwerk
+</option>
+</select>
+</div>
+<div class="form-group">
+<label>
+Type salon
+</label>
+<select>
+<option>
+Kapsalon
+</option>
+<option>
+Barbershop
+</option>
+<option>
+Afro / Texture salon
+</option>
+<option>
+Beauty salon
+</option>
+<option>
+Anders
+</option>
+</select>
+</div>
+<div class="form-group full">
+<label>
+Vertel iets over jouw website
+</label>
+<textarea
+placeholder="Wat wil je graag op je website hebben?"></textarea>
+</div>
+<div class="form-group full">
+<button
+type="submit"
+class="btn btn-primary">
+Aanvraag versturen
+<i class="fa-solid fa-paper-plane"></i>
+</button>
+</div>
+</form>
+</div>
+</div>
+</section>
+<!-- =========================================================
+     FINAL CTA
+========================================================= -->
+<section class="cta">
+<div class="cta-ring"></div>
+<div class="container">
+<div class="cta-content reveal">
+<div class="section-label">
+Kapper Online Web Bouwers
+</div>
+<h2>
+Maak van jouw salon<br>
+een online merk.
+</h2>
+<p>
+Niet gewoon een website.
+Een digitale uitstraling die klanten onthouden.
+</p>
+<a href="#afspraak"
+class="btn btn-primary">
+Start jouw project
+<i class="fa-solid fa-arrow-right"></i>
+</a>
+</div>
+</div>
+</section>
+</main>
+<!-- =========================================================
+     FOOTER
+========================================================= -->
+<footer>
+<div class="container">
+<div class="footer-grid">
+<div class="footer-brand">
+<a href="#home"
+class="brand">
+<div class="brand-logo">
+K
+</div>
+<div>
+<div class="brand-name">
+Kapper Online
+</div>
+<span class="brand-sub">
+Web Bouwers
+</span>
+</div>
+</a>
+<p>
+Premium websites voor kappers,
+barbers en salons die online
+het verschil willen maken.
+</p>
+</div>
+<div>
+<div class="footer-title">
+Navigatie
+</div>
+<ul class="footer-links">
+<li>
+<a href="#home">Home</a>
+</li>
+<li>
+<a href="#over-ons">Over ons</a>
+</li>
+<li>
+<a href="#haarstijlen">Haarstijlen</a>
+</li>
+<li>
+<a href="#prijzen">Prijzen</a>
+</li>
+</ul>
+</div>
+<div>
+<div class="footer-title">
+Ontdek
+</div>
+<ul class="footer-links">
+<li>
+<a href="#portfolio">Portfolio</a>
+</li>
+<li>
+<a href="#reviews">Reviews</a>
+</li>
+<li>
+<a href="#faq">FAQ</a>
+</li>
+<li>
+<a href="#afspraak">Contact</a>
+</li>
+</ul>
+</div>
+<div>
+<div class="footer-title">
+Contact
+</div>
+<ul class="footer-links">
+<li>
+<a href="mailto:info@kapperonlinewebbouwers.nl">
+info@kapperonlinewebbouwers.nl
+</a>
+</li>
+<li>
+<a href="#afspraak">
+Website aanvragen
+</a>
+</li>
+</ul>
+</div>
+</div>
+<div class="footer-bottom">
+<div class="copyright">
+© 2026 Kapper Online Web Bouwers.
+Alle rechten voorbehouden.
+</div>
+<div class="socials">
+<a href="#" aria-label="Instagram">
+<i class="fa-brands fa-instagram"></i>
+</a>
+<a href="#" aria-label="Facebook">
+<i class="fa-brands fa-facebook-f"></i>
+</a>
+<a href="#" aria-label="TikTok">
+<i class="fa-brands fa-tiktok"></i>
+</a>
+<a href="#" aria-label="LinkedIn">
+<i class="fa-brands fa-linkedin-in"></i>
+</a>
+</div>
+</div>
+</div>
+</footer>
+<!-- =========================================================
+     BACK TO TOP
+========================================================= -->
+<a href="#home"
+class="back-top"
+id="backTop"
+aria-label="Terug naar boven">
+<i class="fa-solid fa-arrow-up"></i>
+</a>
+<!-- =========================================================
+     JAVASCRIPT
+========================================================= -->
+<script>
+/* =========================================================
+   HEADER
+========================================================= */
+const header =
+document.getElementById("header");
+const backTop =
+document.getElementById("backTop");
+const progress =
+document.getElementById("scrollProgress");
+window.addEventListener("scroll",()=>{
+/* Header */
+if(window.scrollY > 80){
+header.classList.add("scrolled");
+backTop.classList.add("show");
+}else{
+header.classList.remove("scrolled");
+backTop.classList.remove("show");
+}
+/* Scroll progress */
+const scrollTop =
+window.scrollY;
+const docHeight =
+document.documentElement.scrollHeight
+-
+window.innerHeight;
+const percentage =
+(scrollTop / docHeight) * 100;
+progress.style.width =
+percentage + "%";
+});
+/* =========================================================
+   MOBILE MENU
+========================================================= */
+const menuToggle =
+document.getElementById("menuToggle");
+const navLinks =
+document.getElementById("navLinks");
+menuToggle.addEventListener("click",()=>{
+navLinks.classList.toggle("active");
+const icon =
+menuToggle.querySelector("i");
+if(navLinks.classList.contains("active")){
+icon.classList.remove("fa-bars");
+icon.classList.add("fa-xmark");
+}else{
+icon.classList.remove("fa-xmark");
+icon.classList.add("fa-bars");
+}
+});
+document.querySelectorAll(".nav-links a")
+.forEach(link=>{
+link.addEventListener("click",()=>{
+navLinks.classList.remove("active");
+const icon =
+menuToggle.querySelector("i");
+icon.classList.remove("fa-xmark");
+icon.classList.add("fa-bars");
+});
+});
+/* =========================================================
+   CURSOR GLOW
+========================================================= */
+const cursorGlow =
+document.getElementById("cursorGlow");
+window.addEventListener("mousemove",(e)=>{
+cursorGlow.style.left =
+e.clientX + "px";
+cursorGlow.style.top =
+e.clientY + "px";
+});
+/* =========================================================
+   REVEAL ANIMATIONS
+========================================================= */
+const revealElements =
+document.querySelectorAll(".reveal");
+const revealObserver =
+new IntersectionObserver(
+(entries)=>{
+entries.forEach(entry=>{
+if(entry.isIntersecting){
+entry.target.classList.add("visible");
+revealObserver.unobserve(
+entry.target
+);
+}
+});
+},
+{
+threshold:.12
+}
+);
+revealElements.forEach(el=>{
+revealObserver.observe(el);
+});
+/* =========================================================
+   HAARSTIJL FILTER
+========================================================= */
+const filterButtons =
+document.querySelectorAll(".filter-btn");
+const styleCards =
+document.querySelectorAll(".style-card");
+filterButtons.forEach(button=>{
+button.addEventListener("click",()=>{
+filterButtons.forEach(btn=>{
+btn.classList.remove("active");
+});
+button.classList.add("active");
+const filter =
+button.dataset.filter;
+styleCards.forEach(card=>{
+const category =
+card.dataset.category;
+if(
+filter === "all" ||
+category === filter
+){
+card.style.display =
+"block";
+setTimeout(()=>{
+card.style.opacity = "1";
+card.style.transform =
+"scale(1)";
+},20);
+}else{
+card.style.opacity = "0";
+card.style.transform =
+"scale(.94)";
+setTimeout(()=>{
+card.style.display =
+"none";
+},250);
+}
+});
+});
+});
+/* =========================================================
+   FAQ
+========================================================= */
+const faqQuestions =
+document.querySelectorAll(".faq-question");
+faqQuestions.forEach(question=>{
+question.addEventListener("click",()=>{
+const item =
+question.parentElement;
+/* Close others */
+document.querySelectorAll(".faq-item")
+.forEach(other=>{
+if(other !== item){
+other.classList.remove("open");
+}
+});
+item.classList.toggle("open");
+});
+});
+/* =========================================================
+   COUNTERS
+========================================================= */
+const counters =
+document.querySelectorAll(".counter");
+const counterObserver =
+new IntersectionObserver(
+(entries)=>{
+entries.forEach(entry=>{
+if(entry.isIntersecting){
+const counter =
+entry.target;
+const target =
+parseInt(
+counter.dataset.target
+);
+let current = 0;
+const increment =
+Math.max(
+1,
+Math.ceil(target / 60)
+);
+const updateCounter = ()=>{
+current += increment;
+if(current >= target){
+counter.textContent =
+target + "+";
+}else{
+counter.textContent =
+current;
+requestAnimationFrame(
+updateCounter
+);
+}
+};
+updateCounter();
+counterObserver.unobserve(counter);
+}
+});
+},
+{
+threshold:.7
+}
+);
+counters.forEach(counter=>{
+counterObserver.observe(counter);
+});
+/* =========================================================
+   FORM
+========================================================= */
+const bookingForm =
+document.getElementById("bookingForm");
+bookingForm.addEventListener("submit",(e)=>{
+e.preventDefault();
+const button =
+bookingForm.querySelector("button");
+const original =
+button.innerHTML;
+button.innerHTML =
+'<i class="fa-solid fa-check"></i> Aanvraag ontvangen';
+button.style.background =
+"#69c18b";
+setTimeout(()=>{
+button.innerHTML =
+original;
+button.style.background =
+"";
+bookingForm.reset();
+},3500);
+});
+/* =========================================================
+   MAGNETIC BUTTON EFFECT
+========================================================= */
+document.querySelectorAll(".btn")
+.forEach(button=>{
+button.addEventListener("mousemove",(e)=>{
+const rect =
+button.getBoundingClientRect();
+const x =
+e.clientX -
+rect.left -
+rect.width / 2;
+const y =
+e.clientY -
+rect.top -
+rect.height / 2;
+button.style.transform =
+`translate(${x * .08}px,${y * .08}px)`;
+});
+button.addEventListener("mouseleave",()=>{
+button.style.transform =
+"translate(0,0)";
+});
+});
+/* =========================================================
+   PARALLAX HERO
+========================================================= */
+window.addEventListener("scroll",()=>{
+const hero =
+document.querySelector(".hero");
+if(!hero) return;
+const scroll =
+window.scrollY;
+hero.style.backgroundPosition =
+`center ${scroll * .18}px`;
+});
+</script>
+</body>
+</html>
